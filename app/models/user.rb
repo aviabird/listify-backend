@@ -23,7 +23,10 @@ class User
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
 
-  field :social_logins,      type: Hash, default: { "facebook" => nil }
+  field :social_logins,      type: Hash, default: { 
+                                                    "facebook"  => nil,
+                                                    "instagram" => nil
+                                                  }
 
   field :full_name,          type: String
 
