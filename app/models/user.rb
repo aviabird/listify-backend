@@ -23,6 +23,12 @@ class User
   field :current_sign_in_ip, type: String
   field :last_sign_in_ip,    type: String
 
+
+
+  field :access_tokens,      type: Hash, default: {
+                                        "facebook" => nil,
+                                        "instagram" => nil
+                                        }
   field :social_logins,      type: Hash, default: { 
                                                     "facebook"  => nil,
                                                     "instagram" => nil
@@ -53,7 +59,8 @@ class User
     user.update(
       full_name: oauth.get_full_name,
       email: data[:email],
-      social_logins: user.social_logins.merge(oauth.provider => data[:id])
+      social_logins: user.social_logins.merge(oauth.provider => data[:id]),
+      access_tokens: user.access_tokens.merge(oauth.provider => data[:access_token])
     )
     
     user

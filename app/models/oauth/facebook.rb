@@ -13,6 +13,7 @@ module Oauth
       @data = JSON.parse(response.body).with_indifferent_access
       @data['image_url'] = @data['picture']['data']['url'] if @data['picture'].present?
       @uid = @data[:id] ||= @data[:sub]
+      @data['access_token'] = @access_token
       @data
     end
   end
