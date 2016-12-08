@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     scope module: :v0, constraints: ApiConstraint.new(version: 0, default: true) do
       # resources :users
-      
+      post 'auth/:provider', to: 'auth#authenticate'      
     end
   end
 end
