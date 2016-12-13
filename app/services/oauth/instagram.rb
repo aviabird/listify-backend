@@ -15,7 +15,5 @@ module Oauth
       @uid = @data[:data][:id]
       @data
      end
-
-
   end
 end

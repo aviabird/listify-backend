@@ -10,14 +10,15 @@ module Oauth
       # This retrives the provider from the class name that has been called
       #  === Example
       #   Oauth::Facebook => facebook
-      @provider = self.class.name.split('::').last.downcase
-      @client = HTTPClient.new
-      prepare_params(params)
+      @provider     = self.class.name.split('::').last.downcase
+      @client       = HTTPClient.new
+      @params       = prepare_params(params)
       @access_token = params[:access_token].presence || get_access_token
     end
 
+    # Prepare Params to pass to providers access token retrive url.
     def prepare_params(params)
-      @params = {
+      {
         code:          params[:code],
         redirect_uri:  params[:redirectUri],
         client_id:     Rails.application.secrets["#{@provider.upcase}_KEY".to_sym],
@@ -26,12 +27,14 @@ module Oauth
       }
     end
     
+    # Get Access Token by posting the Access token url of a provider
+    # and parse the response and retrive access_token and return 
     def get_access_token
       response = @client.post(self.class::ACCESS_TOKEN_URL, @params)
-      puts "ACCESS TOKEN RESPONSE - #{response.body}"
       JSON.parse(response.body)["access_token"]
     end
 
+    # Is the User authorised 
     def authorized?
       @access_token.present?
     end

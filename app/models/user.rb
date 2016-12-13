@@ -24,11 +24,19 @@ class User
   field :last_sign_in_ip,    type: String
 
 
+  field :secret_tokens,      type: Hash, default: {
+                                        "facebook" => nil,
+                                        "instagram" => nil,
+                                        "twitter" => nil
+                                        }
+
 
   field :access_tokens,      type: Hash, default: {
                                         "facebook" => nil,
-                                        "instagram" => nil
+                                        "instagram" => nil,
+                                        "twitter" => nil
                                         }
+
   field :social_logins,      type: Hash, default: { 
                                                     "facebook"  => nil,
                                                     "instagram" => nil
@@ -47,7 +55,28 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
-  def self.for_oauth(oauth)
+
+  def self.find_or_create(attr)
+
+    user = find_or_create_by(email: attr[:email]) do |u|
+              u.password = SecureRandom.hex;
+          end
+
+    user.update(
+      access_tokens: user.access_tokens.merge('twitter' => attr[:access_token]),
+      secret_tokens: user.secret_tokens.merge('twitter' => attr[:secret_token])
+      )
+
+    user
+  end
+
+
+
+  # Takes oAuth object as params 
+  # Retrive user data from oauth object
+  # find or create the user and if user present
+  # update the user with new values mainly access_token 
+  def self.create_or_update(oauth)
     oauth.get_data
     data = oauth.data
 
