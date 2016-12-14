@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       match 'auth/twitter', to: 'auth#twitter', via: [:get,:post]
       post '/twitter_step_2', to: 'auth#twitter_step_2'
       post 'auth/create_new_user', to: 'auth#create_new_user'
-
+      post  'tweets/get_user_info', to: 'tweets#user_info'
     end
   end
 end
