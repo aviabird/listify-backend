@@ -25,24 +25,22 @@ class User
 
 
   field :secret_tokens,      type: Hash, default: {
-                                        "facebook" => nil,
-                                        "instagram" => nil,
                                         "twitter" => nil
                                         }
 
 
   field :access_tokens,      type: Hash, default: {
-                                        "facebook" => nil,
-                                        "instagram" => nil,
                                         "twitter" => nil
                                         }
 
   field :social_logins,      type: Hash, default: { 
-                                                    "facebook"  => nil,
-                                                    "instagram" => nil
+                                                    "twitter"  => nil
                                                   }
 
   field :full_name,          type: String
+
+  has_many :lists
+
 
   ## Confirmable
   # field :confirmation_token,   type: String
@@ -70,8 +68,7 @@ class User
     user
   end
 
-
-
+  # NOTE: Currently Not using this method , Just for reference
   # Takes oAuth object as params 
   # Retrive user data from oauth object
   # find or create the user and if user present
