@@ -39,7 +39,7 @@ class User
 
   field :full_name,          type: String
 
-  has_many :lists
+  has_many :users_lists
 
 
   ## Confirmable

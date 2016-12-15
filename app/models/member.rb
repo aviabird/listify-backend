@@ -5,5 +5,6 @@ class Member
   field :screen_name, type: String
   field :uri,         type: String
 
-  belongs_to :list
+  has_and_belongs_to_many :lists
+  has_and_belongs_to_many :users_lists
 end
