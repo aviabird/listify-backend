@@ -25,22 +25,29 @@ module Api::V0
     # Currently Login and Signup are same 
     def sign_in
       if params
-        user_attributes = { email: params[:email],
-                            access_token: params[:userAuth][:access_token],
-                            secret_token: params[:userAuth][:secret_token]
+        user_attributes = { access_token: params[:access_token],
+                            secret_token: params[:secret_token],
+                            user_id:      params[:user_id]
                           } 
-        @user = User.find_or_create(user_attributes)
+        @user = User.find_user(user_attributes)
         @user && render_success({token: Token.encode(@user.id)})
       else
         render_error("There was an error with #{params['provider']}. please try again.")
       end
-
     end
 
-    # Yet to implement
-    # Move signup logic in sign_in to this method.
     def sign_up
-
+      if params
+        user_attributes = { email:        params[:email],
+                            access_token: params[:userAuth][:access_token],
+                            secret_token: params[:userAuth][:secret_token],
+                            user_id:      params[:userAuth][:user_id]
+                          } 
+        @user = User.create_user(user_attributes)
+        @user && render_success({token: Token.encode(@user.id)})
+      else
+        render_error("There was an error with #{params['provider']}. please try again.")
+      end
     end
 
     private

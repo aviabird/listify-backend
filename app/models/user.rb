@@ -54,16 +54,28 @@ class User
   # field :locked_at,       type: Time
 
 
-  def self.find_or_create(attr)
-
-    user = find_or_create_by(email: attr[:email]) do |u|
-              u.password = SecureRandom.hex;
-          end
+  # TODO: Add Find by email clause
+  def self.find_user(attr)
+    user = where("social_logins.twitter" => attr[:user_id]).first
 
     user.update(
       access_tokens: user.access_tokens.merge('twitter' => attr[:access_token]),
       secret_tokens: user.secret_tokens.merge('twitter' => attr[:secret_token])
-      )
+      ) if user
+
+    user
+  end
+
+  def self.create_user(attr)
+    user = find_or_create_by(email: attr[:email]) do |u|
+             u.password = SecureRandom.hex;
+          end
+
+    user.update(
+      social_logins: user.social_logins.merge('twitter' => attr[:user_id]),
+      access_tokens: user.access_tokens.merge('twitter' => attr[:access_token]),
+      secret_tokens: user.secret_tokens.merge('twitter' => attr[:secret_token])
+      ) if user
 
     user
   end
