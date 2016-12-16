@@ -19,7 +19,6 @@ class ApplicationController < ActionController::API
 
   def set_current_user
     token = request.headers['Authorization'].to_s.split(' ').last
-    # token = request.params[:token]
     return unless token
 
     payload = Token.new(token)

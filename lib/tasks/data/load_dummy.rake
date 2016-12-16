@@ -3,11 +3,12 @@ namespace :data do
   desc 'Create Lists Data'
   task load_dummy: :environment do
     @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = "TSOSvmRILlXHXeci9WJPFwmEX"
-      config.consumer_secret     = "5hoSZ6AkGnJ3u6UCicBnTK66lWkK36NYDa1Bm4LwAw4r1P0JBL"
-      config.access_token        = "2511010010-V6Fr7skWkw2n4YNA1JjO4iVnmAOSpAn8ERXLvuU"
-      config.access_token_secret = "F7oQ7mYXqtWrdYy0tiDPZSPeptz9EA2bdHUvgPfZ3M9gr"
+      config.consumer_key        = ENV['TWITTER_KEY']
+      config.consumer_secret     = ENV['TWITTER_SECRET']
+      config.access_token        = ENV['USER_ACCESS_TOKEN']
+      config.access_token_secret = ENV['USER_SECRET_TOKEN']
     end
+    
     # Get First List and save in to db
     list = @client.lists.first
     list_attr = { name: list.to_hash[:name], description: list.to_hash[:description] }
