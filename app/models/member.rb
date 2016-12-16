@@ -6,5 +6,4 @@ class Member
   field :uri,         type: String
 
   has_and_belongs_to_many :lists
-  has_and_belongs_to_many :users_lists
 end

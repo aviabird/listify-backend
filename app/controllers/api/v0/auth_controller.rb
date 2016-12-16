@@ -49,11 +49,5 @@ module Api::V0
         render_error("There was an error with #{params['provider']}. please try again.")
       end
     end
-
-    private
-  
-      def twitter_oauth
-        @oauth ||= Oauth::Twitter.new(params)
-      end
   end
 end

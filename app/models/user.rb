@@ -79,28 +79,4 @@ class User
 
     user
   end
-
-  # NOTE: Currently Not using this method , Just for reference
-  # Takes oAuth object as params 
-  # Retrive user data from oauth object
-  # find or create the user and if user present
-  # update the user with new values mainly access_token 
-  def self.create_or_update(oauth)
-    oauth.get_data
-    data = oauth.data
-
-    user = where("social_logins.#{oauth.provider}" => data[:id]).first || 
-      find_or_create_by(email: data[:email]) do |u|
-        u.password =  SecureRandom.hex
-      end
-
-    user.update(
-      full_name: oauth.get_full_name,
-      email: data[:email],
-      social_logins: user.social_logins.merge(oauth.provider => data[:id]),
-      access_tokens: user.access_tokens.merge(oauth.provider => data[:access_token])
-    )
-    
-    user
-  end
 end
