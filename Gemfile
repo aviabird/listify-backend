@@ -67,3 +67,6 @@ gem 'twitter_oauth'
 
 # Twitter API
 gem 'twitter'
+
+# DOT ENV
+gem 'dotenv-rails', :groups => [:development, :test]

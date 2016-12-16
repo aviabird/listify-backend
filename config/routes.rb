@@ -13,7 +13,8 @@ Rails.application.routes.draw do
       post '/twitter_step_2', to: 'auth#twitter_step_2'
       post 'auth/sign_in', to: 'auth#sign_in'
       post 'auth/sign_up', to: 'auth#sign_up'
-      post 'lists/create', to: 'lists#create'
+      post 'lists/suggest', to: 'lists#suggest'
+      post 'users/create_list', to: 'users#create_list'
     end
   end
 end
