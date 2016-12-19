@@ -10,12 +10,9 @@ module Api::V0
 
       service_params = { access_token: access_token, secret_token: secret_token }
 
-      @twitter_create_list = TwitterApi::CreateList.new(
-                              params: service_params, 
-                              list: list,
-                              user: current_user)
+      @twitter_create_list = TwitterApi::CreateList.new(params: service_params)
+      result = @twitter_create_list.call(list: list, user: current_user)
 
-      result = @twitter_create_list.call
       render json: result
     end
   end

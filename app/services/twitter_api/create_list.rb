@@ -1,23 +1,12 @@
 module TwitterApi
   class CreateList < TwitterApi::Base
 
-    def initialize(params: nil, list: nil, user: nil)
-      @client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = ENV['TWITTER_KEY']
-        config.consumer_secret     = ENV['TWITTER_SECRET']
-        config.access_token        = params[:access_token]
-        config.access_token_secret = params[:secret_token]
-      end
-
+    def call(list: nil, user: nil)
       @db_list = list
       @usernames =  @db_list.members.pluck(:screen_name)
       @user = user
       @result = { status: false }
-      return @result
-    end
-
-
-    def call
+      
       user_list = create_new_list_on_twitter
       add_members_to_list(user_list)
       save_list_to_database(user_list)
