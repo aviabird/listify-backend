@@ -9,7 +9,8 @@ module TwitterApi
       
       user_list = create_new_list_on_twitter
       add_members_to_list(user_list)
-      save_list_to_database(user_list)
+      new_list = save_list_to_database(user_list)
+      @result[:new_user_list] = new_list
       @result[:status] = true
       return @result
     end
@@ -24,14 +25,15 @@ module TwitterApi
     end
 
     def save_list_to_database(user_list)
-      list_attr = { user_id: @user.id, 
+      list_attr = { user_id: @user.id,
+                    list_id: @db_list.id,
                     twitter_list_id: user_list.id, 
                     name: user_list.name,
                     slug: user_list.slug
                   }
-
       new_list = UsersList.new(list_attr)
       new_list.save
+      return new_list
     end
   end
 end

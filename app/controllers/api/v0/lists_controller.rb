@@ -2,8 +2,8 @@ module Api::V0
   class ListsController <  ApiController
 
     def suggest
-      list = List.all
-      render json: list.as_json
+      lists = List.all.without(:member_ids);
+      render json: lists.as_json
     end    
   end
 end

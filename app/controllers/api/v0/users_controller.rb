@@ -3,17 +3,31 @@ module Api::V0
     before_action :authenticate_user!
 
     def create_list
-      list = List.includes(:members).find(params["$oid"])
+      # list = List.includes(:members).find(params["id"])
       
+      # access_token = current_user.access_tokens["twitter"]
+      # secret_token =  current_user.secret_tokens["twitter"]
+
+      # service_params = { access_token: access_token, secret_token: secret_token }
+
+      # @twitter_create_list = TwitterApi::CreateList.new(params: service_params)
+      # result = @twitter_create_list.call(list: list, user: current_user)
+      result = { status: true, new_user_list: current_user.users_lists.first}
+      render json: result
+    end
+
+    def list_timeline
+      userList = current_user.users_lists.find(params[:index_id])
+      twitter_list_id = userList.twitter_list_id
       access_token = current_user.access_tokens["twitter"]
       secret_token =  current_user.secret_tokens["twitter"]
 
       service_params = { access_token: access_token, secret_token: secret_token }
+      @twitter_list_timeline = TwitterApi::ListTimeline.new(params: service_params)
 
-      @twitter_create_list = TwitterApi::CreateList.new(params: service_params)
-      result = @twitter_create_list.call(list: list, user: current_user)
-
-      render json: result
+      tweets = @twitter_list_timeline.retrive_timeline(twitter_list_id)
+      render json: tweets
     end
+
   end
 end
