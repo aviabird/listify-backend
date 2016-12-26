@@ -37,16 +37,21 @@ module Api::V0
     end
 
     def sign_up
-      if params
-        user_attributes = { email:        params[:email],
-                            access_token: params[:userAuth][:access_token],
-                            secret_token: params[:userAuth][:secret_token],
-                            user_id:      params[:userAuth][:user_id]
-                          } 
-        @user = User.create_user(user_attributes)
-        @user && render_success({token: Token.encode(@user.id)})
-      else
-        render_error("There was an error with #{params['provider']}. please try again.")
+      begin
+        if params
+          user_attributes = { email:        params[:email],
+                              access_token: params[:userAuth][:access_token],
+                              secret_token: params[:userAuth][:secret_token],
+                              user_id:      params[:userAuth][:user_id]
+                            } 
+          @user = User.create_user(user_attributes)
+          @user && render_success({token: Token.encode(@user.id)})
+        else
+          render_error("There was an error with #{params['provider']}. please try again.")
+        end
+      rescue => e
+        puts e.inspect
+        puts e.backtrace
       end
     end
   end
