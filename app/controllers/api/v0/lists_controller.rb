@@ -3,7 +3,8 @@ module Api::V0
 
     def suggest
       list = List.all
-      render json: list.as_json(include: :members)
+      render json: list.as_json
     end    
+
   end
 end

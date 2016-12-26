@@ -4,4 +4,5 @@ class UsersList
   field :slug,             type: String
   field :name,             type: String
   belongs_to :user
+  belongs_to :list
 end
