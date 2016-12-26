@@ -43,5 +43,17 @@ module Api::V0
       result = @twitter_client.call
       render json: result
     end
+
+
+    def all_feeds
+      user_lists = current_user.users_lists.all
+
+      access_token = current_user.access_tokens["twitter"]
+      secret_token =  current_user.secret_tokens["twitter"]
+
+      service_params = { access_token: access_token, secret_token: secret_token }
+      @twitter_client = TwitterApi::AllListTimeline.new(service_params)
+      result = @twitter_client.call(user_lists)
+    end
   end
 end

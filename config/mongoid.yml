@@ -141,3 +141,9 @@ test:
         read:
           mode: :primary
         max_pool_size: 1
+
+production:
+  identity_map_enabled: true #for eager loading to work
+  clients:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>
