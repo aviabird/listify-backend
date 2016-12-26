@@ -29,5 +29,19 @@ module Api::V0
       render json: tweets
     end
 
+
+    def user_list
+      user_list = current_user.users_lists.all
+      render json: user_list
+    end
+
+    def user_detail
+      access_token = current_user.access_tokens["twitter"]
+      secret_token =  current_user.secret_tokens["twitter"]
+      service_params = { access_token: access_token, secret_token: secret_token }
+      @twitter_client = TwitterApi::RetriveUserDetail.new(params: service_params)
+      result = @twitter_client.call
+      render json: result
+    end
   end
 end
