@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       post 'users/list_timeline', to: 'users#list_timeline'
       post 'users/user_list', to: 'users#user_list'
       post 'users/user_detail', to: 'users#user_detail'
-      match 'bikes/all', to: 'bikes#all_bikes', via: [:get, :post]
     end
   end
 end
