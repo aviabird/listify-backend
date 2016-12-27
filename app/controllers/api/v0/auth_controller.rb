@@ -30,7 +30,8 @@ module Api::V0
                             user_id:      params[:user_id]
                           } 
         @user = User.find_user(user_attributes)
-        @user && render_success({token: Token.encode(@user.id)})
+        @user && render_success({token: Token.encode(@user.id), status: true})
+        render json: { status: false }
       else
         render_error("There was an error with #{params['provider']}. please try again.")
       end
