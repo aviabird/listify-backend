@@ -44,7 +44,6 @@ module Api::V0
       render json: result
     end
 
-
     def all_feeds
       user_lists = current_user.users_lists.all
 

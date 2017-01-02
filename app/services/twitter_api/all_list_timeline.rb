@@ -4,7 +4,7 @@ module TwitterApi
       all_tweets = []
       user_lists.each do |user_list|
         twitter_list_id = user_list.twitter_list_id
-        tweets = @client.list_timeline(twitter_list_id.to_i, { count: 10 })
+        tweets = @client.list_timeline(twitter_list_id.to_i, { count: 2 })
         all_tweets.push(tweets)
       end
       return all_tweets.flatten!
