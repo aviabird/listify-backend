@@ -16,7 +16,7 @@ module TwitterApi
     end
 
     def create_new_list_on_twitter
-      list = @client.create_list(@db_list.name + "-" + rand(100)})
+      list = @client.create_list(@db_list.name + "-" + rand(100).to_s)
       list
     end
 
