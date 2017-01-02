@@ -15,22 +15,22 @@ namespace :data do
       list_attr = { name: list.to_hash[:name], description: list.to_hash[:description] }
       listy = List.new(list_attr)
       listy.save
-    end
 
-    puts "Imported List and created list record"
+      puts "Imported List and created list record"
 
-    # Retrive members
-    members = @client.list_members(list)
+      # Retrive members
+      members = @client.list_members(list)
 
-    members.attrs[:users].each do |lmname|
-      mem_attr = {}
-      mem_attr[:twitter_id] = lmname[:id]
-      mem_attr[:screen_name] = lmname[:screen_name]
-      mem_attr[:uri] = lmname[:url]
-      mem_attr[:list_ids] = [listy.id]
-      new_member = Member.new(mem_attr)
-      new_member.save
-      puts "Imported member #{mem_attr[:screen_name]}"
+      members.attrs[:users].each do |lmname|
+        mem_attr = {}
+        mem_attr[:twitter_id] = lmname[:id]
+        mem_attr[:screen_name] = lmname[:screen_name]
+        mem_attr[:uri] = lmname[:url]
+        mem_attr[:list_ids] = [listy.id]
+        new_member = Member.new(mem_attr)
+        new_member.save
+        puts "Imported member #{mem_attr[:screen_name]}"
+      end
     end
     puts "End"
   end
