@@ -1,3 +1,4 @@
+# rails data:load_dummy
 require 'twitter'
 namespace :data do
   desc 'Create Lists Data'
@@ -10,10 +11,11 @@ namespace :data do
     end
     
     # Get First List and save in to db
-    list = @client.lists.first
-    list_attr = { name: list.to_hash[:name], description: list.to_hash[:description] }
-    listy = List.new(list_attr)
-    listy.save
+    @client.lists.each do |list|
+      list_attr = { name: list.to_hash[:name], description: list.to_hash[:description] }
+      listy = List.new(list_attr)
+      listy.save
+    end
 
     puts "Imported List and created list record"
 
