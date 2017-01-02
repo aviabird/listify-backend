@@ -25,7 +25,7 @@ module Api::V0
       service_params = { access_token: access_token, secret_token: secret_token }
       @twitter_list_timeline = TwitterApi::ListTimeline.new(params: service_params)
 
-      tweets = @twitter_list_timeline.retrive_timeline(twitter_list_id)
+      tweets = @twitter_list_timeline.retrive_timeline(twitter_list_id, userList.id.to_s)
       render json: tweets
     end
 
