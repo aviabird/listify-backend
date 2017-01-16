@@ -54,5 +54,20 @@ module Api::V0
       tweets = @twitter_client.call(user_lists)
       render json: tweets 
     end
+
+
+    def unfollow_list
+      user_list_to_unfollow = current_user
+                                .users_lists
+                                .where(list_id: params["id"])
+                                .first
+
+      unfollowed_list = List.find(params["id"])
+                            .as_json
+                            .merge(isFollowing: false)
+
+      result = { status: true, unfollowed_list: unfollowed_list, user_list_id: user_list_to_unfollow.as_json["id"]}
+      render json: result
+    end
   end
 end
