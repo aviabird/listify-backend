@@ -17,6 +17,8 @@ Rails.application.routes.draw do
       post 'users/user_list', to: 'users#user_list'
       post 'users/user_detail', to: 'users#user_detail'
       post 'users/all_feeds', to: 'users#all_feeds'
+      post 'tweets/add_tweet_to_fav', to: 'tweets#add_tweet_to_fav'
+      post 'tweets/remove_tweet_from_fav', to: 'tweets#remove_tweet_from_fav'
     end
   end
 end
