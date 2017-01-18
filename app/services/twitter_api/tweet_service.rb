@@ -14,12 +14,26 @@ module TwitterApi
       begin
         # binding.pry
         res = @client.unfavorite([tweet_id])
-        # Return fav tweet
+        # Return tweet
         return { status: true, feed: res.first };
       rescue => e
         return { status: false, error: e }
       end
     end
+
+    def retweet(tweet_id)
+      begin
+        # binding.pry
+        res = @client.retweet([tweet_id])
+        retweet_status = res.first.to_hash[:retweeted_status]
+        # Return retweeted tweet
+        return { status: true, feed: retweet_status }
+      rescue => e
+        return { status: false, error: e }
+      end
+    end
+
+
 
   end
 end

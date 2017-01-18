@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post 'users/all_feeds', to: 'users#all_feeds'
       post 'tweets/add_tweet_to_fav', to: 'tweets#add_tweet_to_fav'
       post 'tweets/remove_tweet_from_fav', to: 'tweets#remove_tweet_from_fav'
+      post 'tweets/retweet', to: 'tweets#retweet'
     end
   end
 end
