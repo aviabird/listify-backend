@@ -1,5 +1,7 @@
 module TwitterApi
   class Base
+    attr_accessor :client
+    
     def initialize(params: nil)
       @client = Twitter::REST::Client.new do |config|
         config.consumer_key        = ENV['TWITTER_KEY']

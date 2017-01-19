@@ -34,6 +34,13 @@ module TwitterApi
     end
 
 
-
+    def reply(tweet_id, msg)
+      begin
+        response = @client.update(msg.to_s, in_reply_to_tweet_id: tweet_id)
+        return { status: true, feed: response.to_hash }
+      rescue => e
+        return {status: false, error: e}
+      end
+    end
   end
 end
