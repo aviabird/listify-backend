@@ -6,6 +6,7 @@ module Api::V0
       modified_lists = followed_unfollowed_lists(user_lists);
       render json: modified_lists.as_json
     end
+    
     private
       def followed_unfollowed_lists(user_list)
         followed_list_ids = user_list.map {|ul| ul.list_id}
