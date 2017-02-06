@@ -12,7 +12,7 @@ namespace :data do
     
     # Get First List and save in to db
     @client.lists.each do |list|
-      list_attr = { name: list.to_hash[:name], description: list.to_hash[:description] }
+      list_attr = { name: list.to_hash[:slug], description: list.to_hash[:description] }
       listy = List.new(list_attr)
       listy.save
 
