@@ -8,9 +8,17 @@ module TwitterApi
       @result = { status: false }
       
       user_list = create_new_list_on_twitter
+      
       add_members_to_list(user_list)
-      new_list = save_list_to_database(user_list)
-      @result[:new_user_list] = new_list
+      
+      new_user_list = save_list_to_database(user_list)
+
+      all_user_lists = user.users_lists.all
+
+      new_followed_unfollowed_list = followed_unfollowed_lists(all_user_lists)
+
+      @result[:new_list] = new_followed_unfollowed_list.as_json
+      @result[:new_user_list] = new_user_list
       @result[:status] = true
       return @result
     end
@@ -34,6 +42,20 @@ module TwitterApi
       new_list = UsersList.new(list_attr)
       new_list.save
       return new_list
+    end
+
+    def followed_unfollowed_lists(user_lists)
+      followed_list_ids = user_lists.map {|ul| ul.list_id}
+
+      followed_lists = List.find(followed_list_ids)
+                          .as_json
+                          .map {|li| li.merge(isFollowing: true)}
+      
+      not_followed_lists = List.not_in(_id: followed_list_ids)
+                              .as_json
+                              .map {|li| li.merge(isFollowing: false)}
+      modified_lists = followed_lists + not_followed_lists
+      return modified_lists
     end
   end
 end

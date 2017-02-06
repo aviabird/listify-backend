@@ -1,6 +1,7 @@
 module Api::V0
   class ListsController <  ApiController
     before_action :authenticate_user!
+
     def suggest
       user_lists = current_user.users_lists.all
       modified_lists = followed_unfollowed_lists(user_lists);
@@ -8,8 +9,8 @@ module Api::V0
     end
     
     private
-      def followed_unfollowed_lists(user_list)
-        followed_list_ids = user_list.map {|ul| ul.list_id}
+      def followed_unfollowed_lists(user_lists)
+        followed_list_ids = user_lists.map {|ul| ul.list_id}
 
         followed_lists = List.find(followed_list_ids)
                             .as_json
