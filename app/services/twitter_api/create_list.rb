@@ -24,12 +24,13 @@ module TwitterApi
     end
 
     def create_new_list_on_twitter
-      list_name = (@db_list.name + "_" + rand(100).to_s).truncate(20)
+      list_name = (@db_list.name + "-" + rand(100).to_s).truncate(20)
       list = @client.create_list(list_name)
       return list
     end
 
     def add_members_to_list(user_list)
+      # binding.pry
       @client.add_list_members(user_list, @usernames)
     end
 
