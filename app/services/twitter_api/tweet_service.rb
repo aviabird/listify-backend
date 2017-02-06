@@ -52,10 +52,6 @@ module TwitterApi
       end
     end
 
-    def test
-      binding.pry
-    end
-
     private
     
       def add_user_list_id_to_tweets(user_list_id, tweets)

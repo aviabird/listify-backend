@@ -62,11 +62,18 @@ module Api::V0
                                 .where(list_id: params["id"])
                                 .first
 
+      user_list_id = user_list_to_unfollow.as_json["id"]
+
+      # Delete the user_list
+      user_list_to_unfollow.delete
+
+
+      # Return the list that is unfollowed to update the lists in store.
       unfollowed_list = List.find(params["id"])
                             .as_json
                             .merge(isFollowing: false)
 
-      result = { status: true, unfollowed_list: unfollowed_list, user_list_id: user_list_to_unfollow.as_json["id"]}
+      result = { status: true, unfollowed_list: unfollowed_list, user_list_id: user_list_id}
       render json: result
     end
   end
