@@ -30,8 +30,11 @@ module TwitterApi
     end
 
     def add_members_to_list(user_list)
-      # binding.pry
-      @client.add_list_members(user_list, @usernames)
+      list_id = user_list.to_hash[:id]
+      puts "================== UserList Id is ==============="
+      puts "=====================#{list_id}=================="
+      puts "================================================="
+      @client.add_list_members(list_id, @usernames)
     end
 
     def save_list_to_database(user_list)
